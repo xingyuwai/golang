@@ -1,10 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
-	fmt.Println(Sqrt(12))
-	fmt.Println(Sqrt(-12))
+	//m := MyImage{image.Point{3, 4}, image.Point{203, 204}}
+	Show(Pic)
+	//ShowImage(m)
 }

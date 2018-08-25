@@ -16,6 +16,13 @@ import (
 type ErrNegativeSqrt float64
 
 func (err ErrNegativeSqrt) Error() string {
+	/**
+		* fmt.Sprint(e) will call e.Error() to convert the
+		* value e to a string. If the Error() method calls fmt.Sprint(e),
+		* then the program recurses until out of memory.
+	    * You can break the recursion by converting the e
+	    * to a value without a String or Error method
+	*/
 	return fmt.Sprintf("Cannot Sqrt negative number: %v\n", float64(err))
 }
 
