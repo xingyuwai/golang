@@ -10,12 +10,11 @@
 package main
 
 import (
-	"bytes"
-	"encoding/base64"
-	"fmt"
 	"image"
 	"image/color"
 	"image/png"
+	"os"
+	"os/exec"
 )
 
 type MyImage struct {
@@ -58,7 +57,10 @@ func Show(f func(int, int) [][]uint8) {
 	ShowImage(m)
 }
 
+// base64 is a simple encryption.
 func ShowImage(m image.Image) {
+	const SavePath string = "/home/jia/Desktop/golang/src/exercise.org/tour/methods-interface/image.png"
+	/**
 	var buf bytes.Buffer
 	err := png.Encode(&buf, m)
 	if err != nil {
@@ -66,6 +68,30 @@ func ShowImage(m image.Image) {
 	}
 	enc := base64.StdEncoding.EncodeToString(buf.Bytes())
 	fmt.Println("IMAGE:" + enc)
+	*/
+
+	// get the picture
+	imgfile, err := os.Create(SavePath)
+	if err != nil {
+		panic(err)
+	}
+	defer imgfile.Close()
+
+	// image format : png
+	err = png.Encode(imgfile, m)
+	if err != nil {
+		panic(err)
+	}
+
+	c := "display " + SavePath
+	const shell string = "bash"
+
+	// package "os.exec" call shell commands
+	cmd := exec.Command(shell, "-c", c)
+	_, err = cmd.Output()
+	if err != nil {
+		panic(err)
+	}
 }
 
 //ToDo
